@@ -1,0 +1,97 @@
+
+#define DFS_WHITE -1 // normal DFS, do not change this with other values (other than 0), because we usually use memset with conjunction with DFS_WHITE
+#define DFS_BLACK 1
+
+vector<vii> AdjList;
+
+vi dfs_num;
+#define DFS_GRAY 2              // one more color for graph edges property check
+vi dfs_parent;
+
+vi dfs_low;       // additional information for articulation points/bridges/SCCs
+vi articulation_vertex;
+int dfsNumberCounter, dfsRoot, rootChildren;
+
+int V,E,cnt;
+vii choco;
+
+void articulationPointAndBridge(int u)
+{
+    dfs_low[u] = dfs_num[u] = dfsNumberCounter++;      // dfs_low[u] <= dfs_num[u]
+    for (int j = 0; j < (int)AdjList[u].size(); j++)
+    {
+        ii v = AdjList[u][j];
+        if (dfs_num[v.first] == DFS_WHITE)                            // a tree edge
+        {
+            dfs_parent[v.first] = u;
+            if (u == dfsRoot) rootChildren++;  // special case, count children of root
+
+            articulationPointAndBridge(v.first);
+
+            if (dfs_low[v.first] >= dfs_num[u])              // for articulation point
+                articulation_vertex[u] = true;           // store this information first
+            if (dfs_low[v.first] > dfs_num[u]){                           // for bridge
+                //printf(" Edge (%d, %d) is a bridge\n", u, v.first);
+                int a,b;
+                a=min(u,v.first);
+                b=max(u,v.first);
+                choco.push_back(ii(a,b));
+                cnt++;
+            }
+            dfs_low[u] = min(dfs_low[u], dfs_low[v.first]);       // update dfs_low[u]
+        }
+        else if (v.first != dfs_parent[u])       // a back edge and not direct cycle
+            dfs_low[u] = min(dfs_low[u], dfs_num[v.first]);       // update dfs_low[u]
+    }
+}
+
+
+int main()
+{
+//    READ("in.txt");
+    //WRITE("out.txt");
+
+    int T;
+    scanf("%d",&T);
+    for(int tc=1; tc<=T; tc++)
+    {
+        scanf("%d",&V);
+        AdjList.assign(V+1,vii());
+        for(int i=0; i<V; i++)
+        {
+            int u,v,k;
+            scanf("%d (%d)",&u,&k);
+            for(int j=0; j<k; j++)
+            {
+                scanf("%d",&v);
+                if(u<v){
+                AdjList[u].push_back(ii(v,0));
+                AdjList[v].push_back(ii(u,0));
+                }
+            }
+        }
+        printf("Case %d:\n",tc);
+        dfsNumberCounter = 0;
+        dfs_num.assign(V, DFS_WHITE);
+        dfs_low.assign(V, 0);
+        dfs_parent.assign(V, -1);
+        articulation_vertex.assign(V, 0);
+         cnt=0;
+         choco.clear();
+        for (int i = 0; i < V; i++)
+            if (dfs_num[i] == DFS_WHITE)
+            {
+                dfsRoot = i;
+                rootChildren = 0;
+                articulationPointAndBridge(i);
+                articulation_vertex[dfsRoot] = (rootChildren > 1);
+            }
+        printf("%d critical links\n",choco.size());
+        sort(choco.begin(),choco.end());
+        for(int i=0;i<choco.size();i++)
+        {
+            printf("%d - %d\n",choco[i].first,choco[i].second);
+        }
+    }
+    return 0;
+}

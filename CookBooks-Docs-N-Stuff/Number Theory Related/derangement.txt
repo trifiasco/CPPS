@@ -1,0 +1,6 @@
+ll d[30];
+void derangement()
+{
+    d[0] = 1, d[1] = 0;
+    for (int i=2; i<=22; ++i) d[i] = (i-1)*(d[i-2] + d[i-1]);
+}

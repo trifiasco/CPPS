@@ -1,0 +1,109 @@
+#define SIZE 100007
+class SegmentedTree
+{
+    vi sum;
+    vi manager;
+    vi A;
+    int n;
+
+    int left(int node)
+    {
+        return node<<1;
+    }
+    int right(int node)
+    {
+        return (node<<1)+1;
+    }
+
+    void merge_This(int node)
+    {
+        sum[node] = ///how it will change ....
+    }
+
+    void pushDown(int node,int b,int e) ///to propagate to lower level manager
+    {
+        if(manager[node]==-1) ///nothing to propagate
+        {
+            return;
+        }
+
+        int mid=(b+e)/2;
+
+        ///change sum of left and right child node
+
+        sum[left(node)]=...;
+        sum[right(node)]=...;
+
+        ///give left and right manager the propagate value;
+        manager[left(node)]=manager[right(node)]=...;
+
+        ///free this manager
+        manager[node]=-1;
+
+
+    }
+
+
+
+public:
+
+    SegmentedTree()
+    {
+
+    }
+    void update(int node,int b,int e,int i,int j,int v)
+    {
+        if(b>j || e<i) ///segment outside
+        {
+            return;
+        }
+
+        if(b>=i && e<=j) ///segment completely inside
+        {
+            sum[node]=   ///update it accordingly
+            manager[node]=v;
+            return;
+        }
+
+        pushDown(node,b,e);
+        int mid=(b+e)/2;
+
+        update(left(node),b,mid,i,j,v);
+        update(right(node),mid+1,e,i,j,v);
+
+        merge_This(node);
+
+    }
+
+    int query(int node,int b,int e,int i,int j)
+    {
+        if(b>j || e<i) ///segment outside
+        {
+            return 0;
+        }
+
+        if(b>=i && e<=j) ///segment completely inside
+        {
+            return ...   ///sum or thing you need from this node
+        }
+
+        pushDown(node,b,e);
+        int mid=(b+e)/2;
+
+        int ret=0;
+
+        ret+=query(left(node),b,mid,i,j);
+        ret+=query(right(node),mid+1,e,i,j);
+
+        return ret;
+    }
+    SegmentedTree(const vi &_A)
+    {
+        A=_A;
+        n=(int)A.size();
+
+        sum.assign(4*n,0);
+        manager.assign(4*n,-1);
+        update(1,0,n-1,0,n-1,0);
+    }
+};

@@ -1,0 +1,76 @@
+int seg_tree[1000];
+
+void init(int node,int b,int e,int a[])
+{
+    if(b==e)
+    {
+        seg_tree[node]=a[b];
+        return;
+    }
+    int left= 2*node;
+    int right= 2*node +1;
+    int mid= (b+e)/2;
+    init(left,b,mid,a);
+    init(right,mid+1,e,a);
+    seg_tree[node]= seg_tree[left]+seg_tree[right];
+}
+
+int query(int node,int b,int e,int i,int j)
+{
+    if(i>e|| j < b)
+        return 0;
+    if(b>=i && e<=j)
+    {
+        return seg_tree[node];
+    }
+    int left= 2*node;
+    int right= 2*node +1;
+    int mid= (b+e)/2;
+    int p1=query(left,b,mid,i,j);
+    int p2=query(right,mid+1,e,i,j);
+    return p1+p2;
+}
+
+
+void update(int node,int b,int e,int i,int newval)
+{
+    if(i>e|| i < b)
+        return;
+    if(b>=i && e<=i)
+    {
+        seg_tree[node]=newval;
+        return;
+    }
+    int left= 2*node;
+    int right= 2*node +1;
+    int mid= (b+e)/2;
+    update(left,b,mid,i,newval);
+    update(right,mid+1,e,i,newval);
+    seg_tree[node]= seg_tree[left]+seg_tree[right];
+}
+
+int main() {
+    //READ("in.txt");
+    //WRITE("out.txt");
+    int n;
+    scanf("%d", &n);
+    int a[n+1];
+   // int seg_tree[n*3];
+    for(int i=1;i<=n;i++)
+    {
+        scanf("%d", &a[i]);
+    }
+    init(1,1,n,a);
+    for(int i=1;;i++)
+    {
+        int in,j;
+        cin>>in>> j;
+        cout<< query(1,1,n,in,j)<<endl;
+        int up,v;
+        cin>>in>>v;
+        update(1,1,n,in,v);
+
+    }
+
+    return 0;
+}

@@ -1,0 +1,82 @@
+﻿#define M 1000000
+bool marked[M];
+vector<int> primes; // we'll preload primes once at the beginning
+
+void sieve(int n)
+{
+    primes.push_back(2);
+    for (int i = 3; i * i <= n; i += 2)
+    {
+        if (marked[i] == 0)
+        {
+            primes.push_back(i);
+            for (int j = i * i; j <= n; j += i + i)
+            {
+                marked[j] = 1;
+            }
+        }
+    }
+}
+
+int phi (int n) // Oyler er Tochient Function
+{
+    int ret = n;
+    for (int i = 2; i * i <= n; i++)
+    {
+        if (n % i == 0)
+        {
+            while (n % i == 0)
+            {
+                n /= i;
+            }
+            ret -= ret / i;
+        }
+    }
+
+    // this case will happen if n is a prime number
+    // in that case we won't find any prime that divides n
+    // that's less or equal to sqrt(n)
+
+	if (n > 1) ret =ret - (ret / n);
+		return ret;
+}
+
+// ekhane 1 ta number er jonoo er cheye choto ba soman kon sonkha er co-prime ta ber kore
+// like gcd(9,1)=gcd(9,2)=gcd(9,4)=gcd(9,5)=gcd(9,7)=gcd(9,8)=1 ekhane 9 er jonno 6 ta number er co-prime
+// so, phi(9)=6
+
+
+
+phi (funtion dawn of programming contest):
+
+int phi[1000006], mark[1000006];
+
+ void sievephi(int n)
+ {
+ int i,j;
+
+ for(i = 1; i <= n; i++) phi[i] = i;
+phi[1] = 1;
+ mark[1] = 1;
+
+ for(i = 2;i <= n;i += 2)
+ {
+ if(i != 2) mark[i] = 1;
+ phi[i] = phi[i] / 2;
+ }
+
+ for(i = 3; i <=n; i += 2)
+ if(!mark[i])
+ {
+ phi[i] = phi[i] -1;
+
+ for(j = 2 * i; j <= n;j += i)
+ {
+ mark[j] = 1;
+ phi[j] = phi[j] / i * (i-1);
+ }
+ }
+ }
+
+
+

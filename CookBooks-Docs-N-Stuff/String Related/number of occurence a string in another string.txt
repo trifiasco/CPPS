@@ -1,0 +1,13 @@
+int call(string txt,string ptrn)
+{
+    string::size_type pos=0;
+    int cnt=0;
+
+    while ((pos = txt.find(ptrn, pos )) != string::npos)
+    {
+//        debug(txt,ptrn,pos);
+        cnt++;
+        pos += 1;   /// overlap na korle ptrn er length add hobe
+    }
+    return cnt;
+}
