@@ -1,3 +1,5 @@
+
+// *************Template Starts Here**********************
 #pragma comment(linker, "/stack:640000000")
 
 #include <algorithm>
@@ -83,10 +85,10 @@ template <typename T> string NumberToString ( T Number ) { ostringstream ss; ss 
 #endif
 
 struct debugger {
-    template<typename T> debugger& operator , (const T& v) {
-        cerr << v << " ";
-        return *this;
-    }
+	template<typename T> debugger& operator , (const T& v) {
+		cerr << v << " ";
+		return *this;
+	}
 } dbg;
 
 //// 4 direction
@@ -104,19 +106,122 @@ struct debugger {
 
 int main() {
 #ifdef trifiasco
-    READ("in");
-    WRITE("out");
+	READ("in");
+	WRITE("out");
 #endif // trifiasco
-//    ios_base::sync_with_stdio(0); cin.tie(0);
+	ios_base::sync_with_stdio(0); cin.tie(0);
 
-    int n;
-    while (cin >> n)
-    {
-        cout << n << endl;
-    }
+	int h, w, k;
+	while (cin >> h >> w >> k)
+	{
+		int a[h + 1][w + 1];
+		int num_black = 0;
+		for (int i = 0; i < h; i++)
+		{
+			string temp;
+			cin >> temp;
+			for (int j = 0; j < temp.size(); j++)
+			{
+				if (temp[j] == '.')
+					a[i][j] = 1;
+				else {
+					a[i][j] = 0;
+					num_black++;
+				}
+			}
+		}
 
-    return 0;
+		// for (int i = 0; i < h; i++)
+		// {
+		// 	for (int j = 0; j < w; j++)
+		// 	{
+		// 		cout << a[i][j] << " ";
+		// 	}
+		// 	cout << endl;
+		// }
+		cout << num_black << endl;
+		int res = 0;
+
+		debug(h, w);
+		for (int i = -1; i < h; i++)
+		{
+			for (int j = -1; j < w; j++)
+			{
+				//debug(i, j);
+				if (i == -1 && j == -1)
+				{
+					if (num_black == k)
+					{
+						res ++;
+					}
+				}
+				else if (i == -1)
+				{
+					int black_now = 0;
+					for (int l = 0; l < h; l++)
+					{
+						if (a[l][j] == 0)
+						{
+							black_now++;
+						}
+					}
+					int current_black = num_black - black_now;
+					if (current_black == k)
+					{
+						//cout << j + 1 << " column" << endl;
+						res ++;
+					}
+				}
+
+				else if (j == -1)
+				{
+					int black_now = 0;
+					for (int l = 0; l < w; l++)
+					{
+						if (a[i][l] == 0)
+						{
+							black_now++;
+						}
+					}
+					int current_black = num_black - black_now;
+					if (current_black == k)
+					{
+						//cout << i + 1 << " row" << endl;
+						res ++;
+					}
+				}
+				else
+				{
+					//debug("something")
+					int black_now = 0;
+					for (int l = 0; l < h; l++)
+					{
+						if (a[l][j] == 0)
+						{
+							black_now++;
+						}
+					}
+
+					for (int l = 0; l < w; l++)
+					{
+						if (a[i][l] == 0)
+						{
+							black_now++;
+						}
+					}
+					if (a[i][j] == 0)
+						black_now --;
+					int current_black = num_black - black_now;
+					if (current_black == k)
+					{
+						//cout << i + 1 << " row & " << j + 1 << " column" << endl;
+						res ++;
+					}
+				}
+			}
+		}
+
+		cout << res << endl;
+	}
+	return 0;
 }
-
-
-

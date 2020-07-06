@@ -1,3 +1,5 @@
+
+// *************Template Starts Here**********************
 #pragma comment(linker, "/stack:640000000")
 
 #include <algorithm>
@@ -76,17 +78,17 @@ template< class T > inline T gcd(T a, T b) { return (b) == 0 ? (a) : gcd((b), ((
 template< class T > inline T lcm(T a, T b) { return ((a) / gcd((a), (b)) * (b)); }
 template <typename T> string NumberToString ( T Number ) { ostringstream ss; ss << Number; return ss.str(); }
 
-#ifdef trifiasco
+#ifdef howcum
 #define debug(args...) {cerr<<"Debug: "; dbg,args; cerr<<endl;}
 #else
 #define debug(args...)  // Just strip off all debug tokens
 #endif
 
 struct debugger {
-    template<typename T> debugger& operator , (const T& v) {
-        cerr << v << " ";
-        return *this;
-    }
+	template<typename T> debugger& operator , (const T& v) {
+		cerr << v << " ";
+		return *this;
+	}
 } dbg;
 
 //// 4 direction
@@ -104,19 +106,24 @@ struct debugger {
 
 int main() {
 #ifdef trifiasco
-    READ("in");
-    WRITE("out");
+	READ("in");
+	WRITE("out");
 #endif // trifiasco
-//    ios_base::sync_with_stdio(0); cin.tie(0);
+	ios_base::sync_with_stdio(0); cin.tie(0);
 
-    int n;
-    while (cin >> n)
-    {
-        cout << n << endl;
-    }
+	int a[5];
+	int res = 0;
+	for (int i = 0; i < 5; i++)
+	{
+		cin >> a[i];
+		if (a[i] == 0)
+		{
+			res = i + 1;
+		}
+	}
+	cout << res << endl;
 
-    return 0;
+
+
+	return 0;
 }
-
-
-

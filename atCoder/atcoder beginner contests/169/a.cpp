@@ -1,3 +1,5 @@
+
+// *************Template Starts Here**********************
 #pragma comment(linker, "/stack:640000000")
 
 #include <algorithm>
@@ -76,17 +78,17 @@ template< class T > inline T gcd(T a, T b) { return (b) == 0 ? (a) : gcd((b), ((
 template< class T > inline T lcm(T a, T b) { return ((a) / gcd((a), (b)) * (b)); }
 template <typename T> string NumberToString ( T Number ) { ostringstream ss; ss << Number; return ss.str(); }
 
-#ifdef trifiasco
+#ifdef howcum
 #define debug(args...) {cerr<<"Debug: "; dbg,args; cerr<<endl;}
 #else
 #define debug(args...)  // Just strip off all debug tokens
 #endif
 
 struct debugger {
-    template<typename T> debugger& operator , (const T& v) {
-        cerr << v << " ";
-        return *this;
-    }
+	template<typename T> debugger& operator , (const T& v) {
+		cerr << v << " ";
+		return *this;
+	}
 } dbg;
 
 //// 4 direction
@@ -104,19 +106,52 @@ struct debugger {
 
 int main() {
 #ifdef trifiasco
-    READ("in");
-    WRITE("out");
+	READ("in");
+	WRITE("out");
 #endif // trifiasco
-//    ios_base::sync_with_stdio(0); cin.tie(0);
+	ios_base::sync_with_stdio(0); cin.tie(0);
 
-    int n;
-    while (cin >> n)
-    {
-        cout << n << endl;
-    }
+	int n;
+	while (cin >> n)
+	{
+		ull a[n];
+		int zero = 0;
 
-    return 0;
+		for (int i = 0; i < n; i ++)
+		{
+			cin >> a[i];
+			if (a[i] == 0LL)
+			{
+				zero++;
+			}
+		}
+		if (zero > 0)
+		{
+			cout << "0" << endl;
+			continue;
+		}
+		sort(a, a + n);
+
+		ull total = 1LL;
+		ull limit = 1e18;
+		int flag = 1;
+		for (int i = 0; i < n; i++)
+		{
+			// total *= a[i];
+			if (a[i] > limit / total)
+			{
+				//total = -1LL;
+				flag = 0;
+				cout << "-1" << endl;
+				break;
+			}
+			else
+			{
+				total *= a[i];
+			}
+		}
+		if (flag)
+			cout << total << endl;
+	}
+	return 0;
 }
-
-
-
