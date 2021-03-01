@@ -1,5 +1,0 @@
-this is a temporary file
-
-** this is modified part
-
-Again modification
