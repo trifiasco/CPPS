@@ -2,6 +2,7 @@ import sys
 import os
 import math
 
+
 def READ(fileName):
     script_dir = os.path.dirname(__file__)
     username = "trifiasco"
@@ -10,6 +11,6 @@ def READ(fileName):
 
 
 if __name__ == "__main__":
-    READ('in.txt')
+    # READ('in.txt')
+    print('this is a test')
     pass
-
