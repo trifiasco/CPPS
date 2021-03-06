@@ -1,3 +1,7 @@
+'''
+Computational complexity = O(log(n))
+'''
+
 import math
 
 
