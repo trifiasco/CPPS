@@ -1,18 +1,16 @@
 import sys
 import os
-import math
 
 LOCAL_ENV: bool = os.environ.get('USER') == 'trifiasco'
 
 
-def READ(fileName):
-    sys.stdin = open(
-        '{path}/{fileName}'.format(path=os.path.dirname(__file__), fileName=fileName), 'r')
-
+def READ():
+    sys.stdin = open('in.txt', 'r');
+    #sys.stdout = open('out.txt', 'w');
 
 if __name__ == "__main__":
     if LOCAL_ENV:
-        READ('in.txt')
+        READ()
 
     while True:
         try:
