@@ -12,10 +12,10 @@ if __name__ == "__main__":
     if LOCAL_ENV:
         READ()
 
-    while True:
-        try:
-            n = int(input())
-            # do stuff
-        except EOFError:
-            break
+    # while True:
+        # try:
+            # n = int(input())
+            # # do stuff
+        # except EOFError:
+            # break
     pass
