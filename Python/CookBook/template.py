@@ -12,6 +12,7 @@ if __name__ == "__main__":
     if LOCAL_ENV:
         READ()
 
+    sys.setrecursionlimit(200000)
     # while True:
         # try:
             # n = int(input())
