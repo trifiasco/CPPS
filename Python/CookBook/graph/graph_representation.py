@@ -1,18 +1,17 @@
 
 class Graph():
     
-    def __init__(self, V, E, edges) -> None:
-       self.num_of_vertex = V;
-       self.num_of_edges = E;
-       self.edges = edges;
+    def __init__(self, V, E = 0) -> None:
+       self.V= V;
+       self.E = E;
        self.adjlist = [[] for i in range(V + 1)];
-
-       for edge in edges:
-         self.adjlist[edge[0]].append(edge[1]);
-         self.adjlist[edge[1]].append(edge[0]);
-
        
        self.visited = [0] * (V + 1);
+
+    def add_edge(self, u, v):
+        self.E += 1
+        self.adjlist[u].append(v)
+        self.adjlist[v].append(u)
 
     def is_node_processed(self, node):
         return self.visited[node] != 0;
