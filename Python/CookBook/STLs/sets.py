@@ -10,6 +10,13 @@ if __name__ == "__main__":
     basket = {'apple', 'orange', 'apple', 'pear', 'orange', 'banana'}
     print(basket)
 
+
+    joined = "-".join(basket);
+    # for item in basket:
+        # joined += item
+
+    print(joined)
+
     print('orange' in basket)
 
     # >> >  # Demonstrate set operations on unique letters from two words
