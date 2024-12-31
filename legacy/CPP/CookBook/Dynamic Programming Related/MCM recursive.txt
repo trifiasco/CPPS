@@ -1,0 +1,37 @@
+int row[10000],col[10000];
+int dp[1000][1000];
+
+int f(int b,int e)
+{
+    if(b>=e)
+        return 0;
+    if(dp[b][e]!=-1)
+        return dp[b][e];
+
+    int ans=INF;
+    for(int m=b;m<e;m++)
+    {
+        int ret=f(b,m)+f(m+1,e)+row[b]*col[m]*col[e];
+        //debug(ret);
+        ans=min(ans,ret);
+    }
+    dp[b][e]=ans;
+    return dp[b][e];
+}
+
+
+int main()
+{
+        READ("in.txt");
+    //WRITE("out.txt");
+    int n;
+    cin>>n;
+    for(int i=0;i<n;i++)
+    {
+        cin>>row[i]>>col[i];
+    }
+    CLR(dp,-1);
+    int res= f(0,n-1);
+    cout<< res <<endl;
+    return 0;
+}

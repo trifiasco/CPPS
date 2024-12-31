@@ -1,0 +1,85 @@
+#define LSOne(S) (S & (-S))
+
+class FenwickTreeMAX {
+private:
+  vi ft;
+    int N;
+public:
+  FenwickTreeMAX() {}
+  // initialization: n + 1 zeroes, ignore index 0
+  FenwickTreeMAX(int n) { ft.assign(1<<18 + 1, -INF);N=1<<17; }
+
+  int rsq(int b) {                                     // returns RSQ(1, b)
+    int sum = 0; for (; b; b -= LSOne(b)) sum += ft[b];
+    return sum; }
+
+  int rsq(int a, int b) {                              // returns RSQ(a, b)
+    return rsq(b) - (a == 1 ? 0 : rsq(a - 1)); }
+
+  // adjusts value of the k-th element by v (v can be +ve/inc or -ve/dec)
+  void adjust(int k, int v) {                    // note: n = ft.size() - 1
+    for (; k < (int)ft.size(); k += LSOne(k)) ft[k] = max(ft[k],v); }
+
+  void SetMax(int pos, int x) {
+        for (int i = pos + N; i; i >>= 1)
+            ft[i] = max(ft[i], x);
+    }
+  int GetMax(int L, int R) const // [L, R) i.e. L <= i < R
+    {
+        int res = 0;
+        for (L += N, R += N; L < R; L >>= 1, R >>= 1) {
+            if (L & 1) {
+                res = max(res, ft[L]);
+                L++;
+            }
+            if (R & 1) {
+                R--;
+                res = max(res, ft[R]);
+            }
+        }
+        return res;
+    }
+
+};
+
+class FenwickTreeMIN {
+private:
+  vi ft;
+    int N;
+public:
+  FenwickTreeMIN() {}
+  // initialization: n + 1 zeroes, ignore index 0
+  FenwickTreeMIN(int n) { ft.assign(1<<18 + 1, INF);N=1<<17; }
+
+  int rsq(int b) {                                     // returns RSQ(1, b)
+    int sum = 0; for (; b; b -= LSOne(b)) sum += ft[b];
+    return sum; }
+
+  int rsq(int a, int b) {                              // returns RSQ(a, b)
+    return rsq(b) - (a == 1 ? 0 : rsq(a - 1)); }
+
+  // adjusts value of the k-th element by v (v can be +ve/inc or -ve/dec)
+  void adjust(int k, int v) {                    // note: n = ft.size() - 1
+    for (; k < (int)ft.size(); k += LSOne(k)) ft[k] = min(ft[k],v); }
+
+    void SetMin(int pos, int x) {
+        for (int i = pos + N; i; i >>= 1)
+            ft[i] = min(ft[i], x);
+    }
+  int GetMin(int L, int R) const // [L, R) i.e. L <= i < R
+    {
+        int res = INF;
+        for (L += N, R += N; L < R; L >>= 1, R >>= 1) {
+            if (L & 1) {
+                res = min(res, ft[L]);
+                L++;
+            }
+            if (R & 1) {
+                R--;
+                res = min(res, ft[R]);
+            }
+        }
+        return res;
+    }
+
+};

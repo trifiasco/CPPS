@@ -1,0 +1,163 @@
+#include <algorithm>
+#include <cassert>
+#include <cctype>
+#include <climits>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <fstream>
+#include <iostream>
+#include <iomanip>
+#include <iterator>
+#include <list>
+#include <map>
+#include <numeric>
+#include <queue>
+#include <set>
+#include <sstream>
+#include <stack>
+#include <string>
+#include <utility>
+#include <vector>
+using namespace std;
+
+
+const double EPS = 1e-9;
+const int INF = 0x7f7f7f7f;
+#define PI 3.1415926535897932384626
+
+#define    READ(f) 	         freopen(f, "r", stdin)
+#define    WRITE(f)   	     freopen(f, "w", stdout)
+//
+//#define    vi 	 vector < int >
+//#define    vii 	 vector < vector < int > >
+
+//typedef pair <int,int>pii;
+
+#define CLR(n, v) memset(n, v, sizeof( n ))
+
+#define ff first
+#define ss second
+
+#define ll long long int
+
+//******************DELETE****************
+#define howcum
+#ifdef howcum
+     #define debug(args...) {dbg,args; cerr<<endl;}
+#else
+    #define debug(args...)  // Just strip off all debug tokens
+#endif
+
+struct debugger{
+    template<typename T> debugger& operator , (const T& v){
+        cerr<<v<<" ";
+        return *this;
+    }
+}dbg;
+//******************DELETE****************
+
+template< class T > T _abs(T n) { return (n < 0 ? -n : n); }
+template< class T > T _max(T a, T b) { return (!(a < b) ? a : b); }
+template< class T > T _min(T a, T b) { return (a < b ? a : b); }
+template< class T > T _swap(T &a, T &b) { a=a^b;b=a^b;a=a^b;}
+template< class T > T gcd(T a, T b) { return (b == 0 ? a : gcd(b, a % b)); }
+template< class T > T lcm(T a, T b) { return (a / gcd(a, b) * b); }
+
+typedef pair<int,int>ii;
+typedef vector<ii>vii;
+typedef vector<int>vi;
+
+
+
+int Set(int N,int pos){return N=N | (1<<pos);}
+int reset(int N,int pos){return N= N & ~(1<<pos);}
+bool check(int N,int pos){return (bool)(N & (1<<pos));}
+
+#define mx 50004
+
+vi prime;
+bool marked[mx+2];
+void sieve()
+{
+    int sqrtn=sqrt(mx);
+    //debug("*";)
+    for(int i=3;i<=sqrtn;i+=2)
+    {
+        if(marked[i]==0)
+        {
+            //debug(i)
+            for(int j=i*i;j<=mx;j+=i+i)
+            {
+                //debug(j);
+                marked[j]=1;
+            }
+        }
+    }
+    //debug("**");
+    prime.push_back(2);
+    for(int i=3;i<mx;i+=2)
+    {
+        if(marked[i]==0)
+        {
+            prime.push_back(i);
+        }
+    }
+}
+
+bool arr[100005];
+
+///Returns number of primes between segment [a,b]
+ll segmentedSieve ( ll a, ll b ) {
+    if ( a == 1 ) a++;
+
+    ll sqrtn = sqrt ( b );
+
+    memset ( arr, 0, sizeof arr ); ///Make all index of arr 0.
+
+    for ( int i = 0; i < prime.size() && prime[i] <= sqrtn; i++ ) {
+        ll p = (ll)prime[i];
+        ll j = (ll)p * (ll)p;
+
+        ///If j is smaller than a, then shift it inside of segment [a,b]
+        if ( j < a ) j = ( ( a + p - 1 ) / p ) * p;
+
+        for ( ; j <= b; j += p ) {
+            arr[j-a] = 1; ///mark them as not prime
+        }
+    }
+
+    ll res = 0;
+    for ( ll i = a; i <= b; i++ ) {
+        ///If it is not marked, then it is a prime
+        if ( arr[i-a] == 0 ) res++;
+    }
+    return res;
+}
+
+
+int main()
+{
+//        READ("in.txt");
+    //WRITE("out.txt");
+    sieve();
+    //debug("**");
+    int T;
+    scanf("%d",&T);
+    for(int tc=1;tc<=T;tc++)
+    {
+        ll a,b;
+        scanf("%lld %lld",&a,&b);
+
+        ll res=segmentedSieve(a,b);
+        printf("Case %d: %lld\n",tc,res);
+    }
+    return 0;
+}
+
+
+//10
+//8 1 9 8 3 4 6 1 5 2
+
+

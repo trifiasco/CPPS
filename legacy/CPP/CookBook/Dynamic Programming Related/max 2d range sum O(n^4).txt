@@ -1,0 +1,58 @@
+vii Add_All(int n,int m,vii A)
+{
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<m;j++)
+        {
+            if(i>0)
+            {
+                A[i][j]+=A[i-1][j];
+            }
+            if(j>0)
+            {
+                A[i][j]+=A[i][j-1];
+            }
+            if(i>0 && j>0)
+            {
+                A[i][j]-=A[i-1][j-1];
+            }
+        }
+    }
+    return A;
+}
+
+int max_2D(int n,int m,vii A)
+{
+    A=Add_All(n,m,A);
+
+    int mx=(-127*100*100),temp;
+
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<m;j++)
+        {
+            for(int k=i;k<n;k++)
+            {
+                for(int l=j;l<m;l++)
+                {
+                    temp=A[k][l];
+                    if(i>0)
+                    {
+                        temp-=A[i-1][l];
+                    }
+                    if(j>0)
+                    {
+                        temp-=A[k][j-1];
+                    }
+                    if(i>0 && j>0)
+                    {
+                        temp+=A[i-1][j-1];
+                    }
+                    mx=max(mx,temp);
+                }
+            }
+        }
+    }
+
+    return mx;
+}

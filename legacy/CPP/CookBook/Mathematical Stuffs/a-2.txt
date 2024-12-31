@@ -1,0 +1,39 @@
+ধরেন আমার কাছে n টা coin আছে । f(n) is the number of way that have atleast 3 consequtive coin are same.
+
+এখন একটা coin যোগ করলে n+1 টা coin এর জন্য ।
+last position আমি হেড অথবা টেইল যোগ করতে পারি
+suppose
+0 for head
+1 for tail
+
+xxxxxxxx0
+xxxxxxxx1
+
+so f(n) = 2*f(n-1) + y
+
+এখন যেই সিকুয়েন্স গুলোর শেষে হেড হেড অথবা টেইল টেইল আছে। but still haven't
+at least 3 consequtive same coin. that's are value of y
+xxxxxxx00
+xxxxxxx11
+let's assume it y = g(n)
+
+so f(n) = 2*f(n-1) + g(n)
+   g(n) = h(n-1) -g(n-1)
+  
+h(n) is a function that calculate number way reprent n coin that have no 
+at least 3 consequtive coin
+
+*we have to subtract g(n-1)
+cause 
+xxxxxxxx00 (for n-1)
+xxxxxxxx11
+if last two coin are same .. if i add another coin 
+xxxxxxxx000 (for n)
+xxxxxxxx111
+
+now 3 consequtive coin are same .. that are not under the g(n) . 
+
+h(n) = 2^n - f(n)
+
+2^n are all combination
+and f(n) is the number of way that have atleast 3 consequtive coin are same.

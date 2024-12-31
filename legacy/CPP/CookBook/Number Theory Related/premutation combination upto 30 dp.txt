@@ -1,0 +1,24 @@
+ll dp_permu[31][31],dp_combi[31][31];
+
+void permu()
+{
+    for(int i=0;i<=30;i++)
+    {
+        dp_permu[i][0]=1;
+        dp_permu[i][1]=i;
+
+        for(int j=2;j<=i;j++)
+            dp_permu[i][j]=dp_permu[i][j-1]*(ll)(i-j+1);
+    }
+}
+void combi()
+{
+    for(int i=0;i<31;i++)
+    {
+        dp_combi[i][0]=dp_combi[i][i]=1;
+        for(int j=1;j<i;j++)
+        {
+            dp_combi[i][j]=dp_combi[i-1][j-1]+dp_combi[i-1][j];
+        }
+    }
+}

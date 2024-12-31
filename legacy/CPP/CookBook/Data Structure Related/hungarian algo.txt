@@ -1,0 +1,131 @@
+n=4
+
+array=[[0 for x in range(n)] for y in range(n)]
+lis=[]
+main_list=[]
+intermidiary=[[0 for x in range(n)] for y in range(n)]
+marked=[[0 for x in range(n)] for y in range(n)]
+flag_for_end=0
+
+def row_reduction():
+    for row in range(n):
+        mn=int(100)
+        for col in range(n):
+            if int(lis[row][col])<mn:
+                mn=int(lis[row][col])
+        
+        for col in range(n):
+            intermidiary[row][col]=int(lis[row][col])-mn;
+
+def column_reduction() :
+    for col in range(n):
+        mn=int(100)
+        for row in range(n):
+            if int(intermidiary[row][col])<mn:
+                mn=int(intermidiary[row][col])
+        
+        for row in range(n):
+            intermidiary[row][col]=int(intermidiary[row][col])-mn;   
+            
+def row_scanning():
+    for row in range(n):
+        for col in range(n):
+            marked[row][col]=int(0);
+    for row in range(n):
+        zero_count=0;
+        zero_position=-1;
+        for col in range(n):
+            if int(intermidiary[row][col])==0 and int(marked[row][col])==0:
+                zero_count+=1
+                zero_position=col
+        if zero_count==1:
+            #print(str(row) + " " + str(zero_position) + " ") 
+            marked[row][zero_position]=1
+            for r in range(n):
+                if marked[r][zero_position]==1:
+                    continue;
+                marked[r][zero_position]=-1;
+
+def column_scanning():
+    for col in range(n):
+        zero_count=0;
+        zero_position=-1;
+        for row in range(n):
+            if int(intermidiary[row][col])==0 and int(marked[row][col])==0:
+                zero_count+=1
+                zero_position=row
+        if zero_count==1:
+            #print(str(row) + " " + str(zero_position) + " ") 
+            marked[zero_position][col]=1
+            for c in range(n):
+                if marked[zero_position][c]==1:
+                    continue;
+                if marked[zero_position][c]==-1:
+                    marked[zero_position][c]=-2;
+                elif marked[zero_position][c]==1:
+                     marked[zero_position][c]==2
+                else:
+                    marked[zero_position][c]=-1;
+def checking():
+    count_one=0;
+    
+    for row in range(n):
+        for col in range(n):
+            if int(marked[row][col])==1:
+                count_one+=1;
+    global flag_for_end;
+    print(count_one)
+    if(count_one==n):
+        flag_for_end=1;
+
+def operation_over_again():
+    mn= int(100)
+    for row in range(n):
+        for col in range(n):
+            if intermidiary[row][col]<mn and marked[row][col]==0:
+                mn=intermidiary[row][col]
+    
+    for row in range(n):
+        for col in range(n):
+            if marked[row][col]==-2:
+               intermidiary[row][col]+=mn
+            elif marked[row][col]==0:
+                intermidiary[row][col]-=mn
+    
+    for row in range(n):
+        for col in range(n):
+            lis[row][col]=intermidiary[row][col]
+            
+
+            
+def print_res():
+    
+    for row in range(n):
+        for col in range(n):
+            if marked[row][col]==1:
+                print("job " + str(row+1) + " : operator " +str(col+1) + " and time needed: " + str(main_list[row][col])) 
+                
+            
+with open("in.txt") as file: 
+    reader = file.readlines()
+    for row in reader:
+        lis.append(row.split(" "))
+        main_list.append(row.split(" "))
+        #print row
+
+while(True):
+    row_reduction()
+    column_reduction()
+    row_scanning()
+    
+    column_scanning()
+    checking()
+    if flag_for_end==1:
+        break;
+    print(flag_for_end)
+    # for i in range(n):
+    #     print(intermidiary[i])
+    operation_over_again()
+    #break;
+
+print_res();

@@ -1,0 +1,61 @@
+vector <vi> AdjList;
+int V,E,s,layer;
+vi p,dist;
+
+void shortestpath(int u)
+{
+    if(u==s)
+    {
+        printf("%d ",u);
+        return;
+    }
+    shortestpath(p[u]);
+    printf("%d ",u);
+}
+
+int main()
+{
+        READ("in.txt");
+    //WRITE("out.txt");
+    int V,E;
+    scanf("%d %d",&V,&E);
+    AdjList.assign(V,vi());
+    for(int i=1;i<=E;i++)
+    {
+        int u,v;
+        scanf("%d %d",&u,&v);
+        AdjList[u].push_back(v);
+        AdjList[v].push_back(u);
+    }
+    s=5;
+    layer=-1;
+
+    dist.assign(V,INF);
+    dist[s]=0;
+    queue<int>q;
+
+    q.push(s);
+    p.assign(V,-1);
+    while(!q.empty())
+    {
+        int u=q.front();
+        q.pop();
+        if (dist[u] != layer) printf("\nLayer %d: ", dist[u]);
+        layer=dist[u];
+        printf("visit: %d ",u);
+        for(int j=0;j<(int)AdjList[u].size();j++)
+        {
+            int v=AdjList[u][j];
+            if(dist[v]==INF)
+            {
+                dist[v]=dist[u]+1;
+                p[v]=u;
+                q.push(v);
+            }
+        }
+    }
+    printf("\n");
+    shortestpath(7);
+    //printf("dekhi\n");
+    return 0;
+}
