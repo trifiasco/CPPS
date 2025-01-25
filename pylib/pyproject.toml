@@ -6,7 +6,17 @@ authors = ["Arnab Roy <trifiasco@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.13"
+python = "^3.12"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+pytest-cov = "^6.0.0"
+
+[tool.pytest.ini_options]
+pythonpath = "pylib"
+testpaths = "tests"
+addopts = "-v"
 
 
 [build-system]
