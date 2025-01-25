@@ -10,3 +10,11 @@ repos:
     # Run the formatter.
     - id: ruff-format
       exclude: '^legacy/'
+
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v1.14.1
+  hooks:
+    - id: mypy
+      # additional_dependencies: [types-all]
+      # args: [--config-file=pyproject.toml]
+      exclude: '^legacy/|^tests/'
