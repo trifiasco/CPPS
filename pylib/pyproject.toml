@@ -12,6 +12,8 @@ python = "^3.12"
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.4"
 pytest-cov = "^6.0.0"
+ruff = "^0.9.3"
+pre-commit = "^4.1.0"
 
 [tool.pytest.ini_options]
 pythonpath = "pylib"
