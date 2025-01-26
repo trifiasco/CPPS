@@ -17,4 +17,5 @@ repos:
     - id: mypy
       # additional_dependencies: [types-all]
       # args: [--config-file=pyproject.toml]
-      exclude: '^legacy/|^tests/'
+      exclude: '^(tests/|legacy/).*$'
+

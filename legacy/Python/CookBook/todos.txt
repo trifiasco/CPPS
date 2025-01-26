@@ -1,11 +1,10 @@
 # TODOs:
 - Data Structures
-    - segment tree, fenwick tree, union find, disjoint set
+    - segment tree, fenwick tree
 - Searching & Sorting
     - ternary search, quick sort
 - String
     - KMP, Z, Aho-Corasick, Manacher, Suffix Array, Suffix Tree
 - Graph
     - Dijkstra, Bellman-Ford, Floyd
-- DP
 
